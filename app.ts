@@ -1,21 +1,19 @@
-import express, { Request, Response } from "express"
-const server = express();
+import express, { Request, Response } from "express";
+import book from "./bookRoutes";
+import loggerMiddleware from "./logger";
+import bodyParser from "body-parser";
+const app = express();
+const PORT = 3000;
 
-server.get("/",(req:Request,res:Response) => {
-    console.log(req.url);
-    res.status(200).send("Hello World");
+app.use(loggerMiddleware);
+app.use(bodyParser.json());
+app.use("/books", book);
+
+app.get("/", (req: Request, res: Response) => {
+  res.status(200).send("Home page of Bookstore");
 });
 
-server.get("/profile",(req:Request,res:Response) => {
-    
-    const profile = {
-        age: 23,
-        name: "Alexander"
-    }
-    console.log(profile.name);
-    res.status(200).send(profile)
-})
-
-server.listen(3000,()=>{
-    console.log("Server Listening to 3000");
+// Start the server
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
 });
