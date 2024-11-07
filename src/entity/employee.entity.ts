@@ -1,31 +1,31 @@
 import {
-  Column,
-  CreateDateColumn,
-  DeleteDateColumn,
-  Entity,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
+    Column,
+    CreateDateColumn,
+    DeleteDateColumn,
+    Entity,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn,
 } from "typeorm";
 
 @Entity()
 class Employee {
-  @PrimaryGeneratedColumn()
-  id: number;
+    @PrimaryGeneratedColumn()
+    id: number;
 
-  @Column()
-  email: string;
+    @Column()
+    email: string;
 
-  @Column()
-  name: string;
+    @Column()
+    name: string;
 
-  @CreateDateColumn()
-  createdAt: Date;
+    @CreateDateColumn()
+    createdAt: Date;
 
-  @UpdateDateColumn()
-  updatedAt: Date;
+    @UpdateDateColumn()
+    updatedAt: Date;
 
-  @DeleteDateColumn()
-  deletedAt: Date;
+    @DeleteDateColumn()
+    deletedAt: Date;
 }
 
 export default Employee;
