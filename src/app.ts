@@ -1,14 +1,20 @@
 import express, { Request, Response } from "express";
+import "reflect-metadata";
+
 import loggerMiddleware from "./middleware/logger.middleware";
 import bodyParser from "body-parser";
 import dataSource from "./db/data-source.db";
 import employeeRouter from "./routes/employee.routes";
+import HttpException from "./exeption/http.excption";
+import errorMiddleware from "./middleware/error.middleware";
 const app = express();
 const PORT = 3000;
 
 app.use(loggerMiddleware);
 app.use(bodyParser.json());
 app.use("/employee", employeeRouter);
+
+app.use(errorMiddleware);
 
 // app.get("/", (req: Request, res: Response) => {
 //     res.status(200).send("Home page of Employee");

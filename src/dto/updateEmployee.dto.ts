@@ -1,0 +1,38 @@
+import {
+    IsEmail,
+    IsEnum,
+    IsNotEmpty,
+    IsOptional,
+    IsString,
+    ValidateNested,
+} from "class-validator";
+import { AddressDto } from "./createAddress.dto";
+import { Type } from "class-transformer";
+import { Role } from "../utils/role.enum";
+
+export class UpdateEmployeeDto {
+    @IsOptional()
+    @IsNotEmpty()
+    @IsEmail()
+    email?: string;
+
+    @IsOptional()
+    @IsNotEmpty()
+    @IsString()
+    name?: string;
+
+    @IsOptional()
+    @ValidateNested({ each: true })
+    @Type(() => AddressDto)
+    address?: AddressDto;
+
+    @IsOptional()
+    @IsNotEmpty()
+    @IsString()
+    password: string;
+
+    @IsOptional()
+    @IsNotEmpty()
+    @IsEnum(Role)
+    role: Role;
+}

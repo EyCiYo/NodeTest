@@ -5,12 +5,13 @@ class EmployeeRepository {
     constructor(private repository: Repository<Employee>) {}
 
     find = async (): Promise<Employee[]> => {
-        return this.repository.find();
+        return this.repository.find({ relations: ["address"] });
     };
 
-    findOneBy = async (empId: number): Promise<Employee | null> => {
-        return this.repository.findOneBy({
-            id: empId,
+    findOneBy = async (empId: Partial<Employee>): Promise<Employee | null> => {
+        return this.repository.findOne({
+            where: empId,
+            relations: ["address"],
         });
     };
     /*
@@ -24,6 +25,14 @@ class EmployeeRepository {
 
     save = async (employee: Partial<Employee>) => {
         return this.repository.save(employee);
+    };
+
+    update = async (employee: Partial<Employee>) => {
+        return this.repository.update({ id: employee.id }, employee);
+    };
+
+    softRemove = (employee: Employee) => {
+        return this.repository.softRemove(employee);
     };
 }
 
