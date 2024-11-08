@@ -83,8 +83,8 @@ class EmployeeService {
             email: employee.email,
         };
 
-        const token = jsonwebtoken.sign(payload, JWT_SECRET, {
-            expiresIn: JWT_VALIDITY,
+        const token = jsonwebtoken.sign(payload, process.env.JWT_SECRET, {
+            expiresIn: process.env.JWT_VALIDITY,
         });
         return token;
     };
