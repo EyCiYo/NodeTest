@@ -13,6 +13,11 @@ export const ErrorCodes = {
         CODE: "EMPLOYEE WITH ID NOT FOUND",
         MESSAGE: "Employee not found",
     },
+
+    DEPARTMENT_WITH_ID_NOT_FOUND: {
+        CODE: "DEPARTMENT WITH ID NOT FOUND",
+        MESSAGE: "Department not found",
+    },
 };
 
 export type CustomError = (typeof ErrorCodes)[keyof typeof ErrorCodes];

@@ -107,6 +107,12 @@ class EmployeeController {
 
             const changes = { ...req.body };
 
+            if (changes.address && currEmp.address) {
+                Object.assign(currEmp.address, changes.address);
+            } else if (changes.address && !currEmp.address) {
+                currEmp.address = changes.address;
+            }
+
             Object.assign(currEmp, changes);
             // for (const property in changes) {
             //     currEmp[property] = changes[property];

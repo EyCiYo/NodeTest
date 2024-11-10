@@ -11,9 +11,8 @@ const authorize = async (
 ) => {
     try {
         const token = getTokenFromRequestHeader(req);
-
-        const payload = jsonwebtoken.verify(token, JWT_SECRET);
-
+        const payload = jsonwebtoken.verify(token, process.env.JWT_SECRET);
+        
         req.name = (payload as jwtPayload).name;
         req.role = (payload as jwtPayload).role;
         req.email = (payload as jwtPayload).email;

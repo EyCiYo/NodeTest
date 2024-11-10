@@ -28,7 +28,7 @@ class EmployeeRepository {
     };
 
     update = async (employee: Partial<Employee>) => {
-        return this.repository.update({ id: employee.id }, employee);
+        return this.repository.save(employee);
     };
 
     softRemove = (employee: Employee) => {
