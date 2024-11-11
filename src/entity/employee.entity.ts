@@ -15,6 +15,7 @@ class Employee extends AbstractEntity {
     @OneToOne(() => Address, (address) => address.employee, {
         cascade: true,
         onDelete: "CASCADE",
+        onUpdate: "CASCADE",
     })
     address: Address;
 
@@ -24,7 +25,11 @@ class Employee extends AbstractEntity {
     @Column({ nullable: true })
     role: Role;
 
-    @ManyToOne(() => Department, (department) => department.employees)
+    @ManyToOne(() => Department, (department) => department.employees, {
+        cascade: true,
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
+    })
     department: Department;
 }
 

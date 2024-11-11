@@ -3,12 +3,13 @@ import {
     IsEnum,
     IsNotEmpty,
     IsString,
-    IsStrongPassword,
     ValidateNested,
 } from "class-validator";
 import { AddressDto } from "./createAddress.dto";
 import { Type } from "class-transformer";
 import { Role } from "../utils/role.enum";
+import CreateDepartmentDto from "./createDepartment.dto";
+import { Department } from "../utils/department.enum";
 
 export class EmployeeDto {
     @IsNotEmpty()
@@ -31,4 +32,8 @@ export class EmployeeDto {
     @IsNotEmpty()
     @IsEnum(Role)
     role: Role;
+
+    @IsNotEmpty()
+    @IsEnum(Department)
+    department: Department;
 }

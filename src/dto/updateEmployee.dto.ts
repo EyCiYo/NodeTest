@@ -9,6 +9,7 @@ import {
 import { AddressDto } from "./createAddress.dto";
 import { Type } from "class-transformer";
 import { Role } from "../utils/role.enum";
+import { Department } from "../utils/department.enum";
 
 export class UpdateEmployeeDto {
     @IsOptional()
@@ -35,4 +36,9 @@ export class UpdateEmployeeDto {
     @IsNotEmpty()
     @IsEnum(Role)
     role: Role;
+
+    @IsOptional()
+    @IsNotEmpty()
+    @IsEnum(Department)
+    department: Department;
 }

@@ -10,7 +10,6 @@ import { RequestWithUser } from "../utils/requestWithUser";
 import { Role } from "../utils/role.enum";
 import IncorrectPasswordException from "../exeption/incorrectPassword.exception";
 import { ErrorCodes } from "../utils/error.code";
-import EntityNotFoundException from "../exeption/entityNotFound.exception";
 
 class EmployeeController {
     public router: express.Router;
@@ -26,9 +25,20 @@ class EmployeeController {
         this.router.post("/login", this.loginEmployee);
     }
 
-    getAllEmployees = async (req: Request, res: Response) => {
-        const employees = await this.employeeService.findAll();
-        res.status(200).send(employees);
+    getAllEmployees = async (
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ) => {
+        try {
+            const employees = await this.employeeService.findAll();
+            if (!employees) {
+                throw new HttpException(404, "No Employees Found");
+            }
+            res.status(200).send(employees);
+        } catch (error) {
+            next(error);
+        }
     };
 
     getEmployeeById = async (
@@ -75,7 +85,8 @@ class EmployeeController {
                 employee.email,
                 employee.address,
                 employee.password,
-                employee.role
+                employee.role,
+                employee.department
             );
             res.status(200).send(newEmployee);
         } catch (err) {
@@ -102,23 +113,12 @@ class EmployeeController {
                 throw new HttpException(400, JSON.stringify(errors));
             }
 
+            // const changes: any = { ...req.body };
             const id = Number(req.params.id);
-            const currEmp = await this.employeeService.findById(id);
 
-            const changes = { ...req.body };
-
-            if (changes.address && currEmp.address) {
-                Object.assign(currEmp.address, changes.address);
-            } else if (changes.address && !currEmp.address) {
-                currEmp.address = changes.address;
-            }
-
-            Object.assign(currEmp, changes);
-            // for (const property in changes) {
-            //     currEmp[property] = changes[property];
-            // }
             const updatedEmp = await this.employeeService.updateEmployee(
-                currEmp
+                id,
+                employee
             );
             res.status(200).send(updatedEmp);
         } catch (error) {
@@ -153,7 +153,7 @@ class EmployeeController {
                 email,
                 password
             );
-            res.status(200).send(token);
+            res.status(200).send({ data: token });
         } catch (error) {
             next(error);
         }

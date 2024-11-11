@@ -6,12 +6,14 @@ import bodyParser from "body-parser";
 import dataSource from "./db/data-source.db";
 import employeeRouter from "./routes/employee.routes";
 import errorMiddleware from "./middleware/error.middleware";
+import departmentRouter from "./routes/department.routes";
 const app = express();
 const PORT = 3000;
 
 app.use(loggerMiddleware);
 app.use(bodyParser.json());
 app.use("/employee", employeeRouter);
+app.use("/department", departmentRouter);
 
 app.use(errorMiddleware);
 

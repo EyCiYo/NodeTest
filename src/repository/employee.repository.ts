@@ -1,17 +1,18 @@
 import { Repository } from "typeorm";
 import Employee from "../entity/employee.entity";
+import Address from "../entity/address.entity";
 
 class EmployeeRepository {
     constructor(private repository: Repository<Employee>) {}
 
     find = async (): Promise<Employee[]> => {
-        return this.repository.find({ relations: ["address"] });
+        return this.repository.find({ relations: ["address", "department"] });
     };
 
     findOneBy = async (empId: Partial<Employee>): Promise<Employee | null> => {
         return this.repository.findOne({
             where: empId,
-            relations: ["address"],
+            relations: ["address", "department"],
         });
     };
     /*
@@ -28,7 +29,7 @@ class EmployeeRepository {
     };
 
     update = async (employee: Partial<Employee>) => {
-        return this.repository.save(employee);
+        return this.repository.update({ id: employee.id }, employee);
     };
 
     softRemove = (employee: Employee) => {
