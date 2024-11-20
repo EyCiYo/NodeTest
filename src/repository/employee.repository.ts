@@ -6,7 +6,10 @@ class EmployeeRepository {
     constructor(private repository: Repository<Employee>) {}
 
     find = async (): Promise<Employee[]> => {
-        return this.repository.find({ relations: ["address", "department"] });
+        return this.repository.find({
+            relations: ["address", "department"],
+            withDeleted: true,
+        });
     };
 
     findOneBy = async (empId: Partial<Employee>): Promise<Employee | null> => {
@@ -29,7 +32,7 @@ class EmployeeRepository {
     };
 
     update = async (employee: Partial<Employee>) => {
-        return this.repository.update({ id: employee.id }, employee);
+        return this.repository.save(employee);
     };
 
     softRemove = (employee: Employee) => {

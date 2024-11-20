@@ -58,7 +58,7 @@ class EmployeeService {
                 ErrorCodes.EMPLOYEE_WITH_ID_NOT_FOUND
             );
         }
-        // console.log(currEmp);
+        console.log("Changes", changes);
 
         if (changes.address) {
             currEmp.address.line1 = changes.address.line1;
@@ -72,6 +72,7 @@ class EmployeeService {
         if (changes.password) {
             currEmp.password = await bcrypt.hash(changes.password, 10);
         }
+        return this.employeeRepository.update(currEmp);
     };
 
     deleteEmployee = async (id: number) => {
